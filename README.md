@@ -5,7 +5,7 @@
 ### Pré-Requisitos *obrigatórios*:
  - Git
  - JDK 11+
- - Maven 3+
+ - Maven 3.8.1
 
 ### Pré-Requisitos *opcionais*:
  - Docker (Caso queira usar o mysql que tem no projeto)
