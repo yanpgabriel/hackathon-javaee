@@ -11,22 +11,31 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
+
+    @Column(nullable = false)
     private String name;
+
+    @Column(nullable = false, unique = true)
     private String login;
+
+    @Column(nullable = false)
     private String email;
+
+    @Column(nullable = false)
     private String password;
-    private LocalDate birthMonth;
+
+    private LocalDate birthDate;
     private LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt = LocalDateTime.now();
 
     public User(){}
 
-    public User(String name, String login, String email, String password, LocalDate birthMonth) {
+    public User(String name, String login, String email, String password, LocalDate birthDate) {
         this.name = name;
         this.login = login;
         this.email = email;
         this.password = password;
-        this.birthMonth = birthMonth;
+        this.birthDate = birthDate;
     }
 
     public Integer getId() {
@@ -69,12 +78,12 @@ public class User {
         this.password = password;
     }
 
-    public LocalDate getBirthMonth() {
-        return birthMonth;
+    public LocalDate getBirthDate() {
+        return birthDate;
     }
 
-    public void setBirthMonth(LocalDate birthMonth) {
-        this.birthMonth = birthMonth;
+    public void setBirthDate(LocalDate birthDate) {
+        this.birthDate = birthDate;
     }
 
     public LocalDateTime getCreatedAt() {
