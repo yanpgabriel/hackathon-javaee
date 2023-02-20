@@ -1,6 +1,7 @@
 package com.stefanini.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.stefanini.model.User;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -54,5 +55,17 @@ public class UserReturnDTO {
 
     public LocalDateTime getUpdatedAt() {
         return updatedAt;
+    }
+
+    public static UserReturnDTO toDTO(User user){
+        return new UserReturnDTO(
+                user.getId(),
+                user.getName(),
+                user.getLogin(),
+                user.getEmail(),
+                user.getBirthDate(),
+                user.getCreatedAt(),
+                user.getUpdatedAt()
+        );
     }
 }

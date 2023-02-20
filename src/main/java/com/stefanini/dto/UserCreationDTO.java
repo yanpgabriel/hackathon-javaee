@@ -1,6 +1,7 @@
 package com.stefanini.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.stefanini.model.User;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -76,5 +77,15 @@ public class UserCreationDTO {
 
     public void setBirthDate(LocalDate birthDate) {
         this.birthDate = birthDate;
+    }
+
+    public User toUser(){
+        return new User(
+                this.getName(),
+                this.getLogin(),
+                this.getEmail(),
+                this.getPassword(),
+                this.getBirthDate()
+        );
     }
 }
