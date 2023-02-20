@@ -2,16 +2,18 @@ package com.stefanini.exceptions;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 
+import java.util.List;
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class ErrorResponse {
-    private String subject;
     private String message;
     private Integer status;
+    private List<String> errors;
 
-    public ErrorResponse(String subject, String message, Integer status) {
+    public ErrorResponse(String message, Integer status, List<String> errors) {
         this.message = message;
         this.status = status;
-        this.subject = subject;
+        this.errors = errors;
     }
 
     public ErrorResponse(String message, Integer status) {
@@ -21,15 +23,6 @@ public class ErrorResponse {
 
     public ErrorResponse(String message) {
         this.message = message;
-    }
-
-
-    public String getSubject() {
-        return subject;
-    }
-
-    public void setSubject(String subject) {
-        this.subject = subject;
     }
 
     public String getMessage() {
@@ -46,5 +39,13 @@ public class ErrorResponse {
 
     public void setStatus(Integer status) {
         this.status = status;
+    }
+
+    public List<String> getErrors(){
+        return errors;
+    }
+
+    public void setErrors(List<String> errors){
+        this.errors = errors;
     }
 }

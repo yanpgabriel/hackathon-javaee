@@ -20,7 +20,7 @@ public class UserCreationDTO {
     private String email;
 
     @Size(min = 5, max = 20, message = "Login deve possuir entre 5 a 20 caracteres.")
-    @NotBlank(message = "Login não deve ser vazio.")
+    @NotBlank(message = "Login não pode ser vazio.")
     private String login;
 
     @NotBlank(message = "Senha não pode ser vazia.")
