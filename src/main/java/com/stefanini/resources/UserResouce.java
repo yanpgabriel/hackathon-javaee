@@ -7,6 +7,7 @@ import com.stefanini.services.UserService;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
+import javax.validation.constraints.Size;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.util.List;
@@ -19,6 +20,16 @@ public class UserResouce {
 
     @Inject
     UserService userService;
+
+    @GET
+    public Response getAllUsers(@QueryParam("nameInitial")
+                                    @Size(max = 1, message="Inicial deve ter somente 1 caractere") String nameInitial){
+        List<UserReturnDTO> users = userService.getAll(nameInitial).stream()
+                .map(UserReturnDTO::toDTO)
+                .collect(Collectors.toList());
+
+        return Response.ok(users).build();
+    }
 
     @GET
     @Path("/birthdays")
