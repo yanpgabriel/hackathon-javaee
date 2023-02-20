@@ -39,4 +39,10 @@ public class UserDAO extends GenericDAO<User, Integer>{
                 .setParameter("login", login)
                 .getSingleResult();
     }
+
+    public List<User> getBirthdaysOfMonth(Integer month){
+        return createQuery("SELECT u FROM User u where MONTH(u.birthDate) = :month")
+                .setParameter("month", month)
+                .getResultList();
+    }
 }
