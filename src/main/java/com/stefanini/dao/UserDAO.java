@@ -16,7 +16,7 @@ public class UserDAO extends GenericDAO<User, Integer>{
     public List<User> findAll(){ return listAll(); }
 
     public List<User> findAllByNameWithLetterPrefix(String letterPrefix){
-        return createQuery("SELECT u FROM User u WHERE name LIKE :letterPrefix")
+        return createQuery("SELECT u FROM User u WHERE LOWER(name) LIKE LOWER(:letterPrefix)")
                 .setParameter("letterPrefix", letterPrefix + "%")
                 .getResultList();
     }

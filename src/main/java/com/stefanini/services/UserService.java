@@ -20,6 +20,15 @@ public class UserService {
     @Inject
     PasswordUtils passwordUtils;
 
+    public List<User> getAll(){
+        return userDAO.findAll();
+    }
+
+    public List<User> getAll(String nameInitial){
+        if(nameInitial == null) return getAll();
+        else return userDAO.findAllByNameWithLetterPrefix(nameInitial);
+    }
+
     public List<User> getAllBirthdaysOfTheMonth(Integer month){
         if(month == 0) month = LocalDate.now().getMonthValue();
         return userDAO.getBirthdaysOfMonth(month);
