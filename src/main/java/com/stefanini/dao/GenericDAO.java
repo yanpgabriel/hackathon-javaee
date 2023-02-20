@@ -47,8 +47,8 @@ public class GenericDAO<T, I>  {
         em.remove(t);
     }
 
-    public <T> TypedQuery<T> createQuery(String query) {
-        return (TypedQuery<T>) em.createQuery(query, clazz);
+    public TypedQuery<T> createQuery(String query) {
+        return em.createQuery(query, clazz);
     }
 
     public Query createNativeQuery(String query) {
