@@ -15,6 +15,7 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import com.stefanini.dto.UsuarioCompletoDto;
+import com.stefanini.exception.MesNaoExisteException;
 import com.stefanini.exception.UsuarioIdNaoExisteException;
 import com.stefanini.exception.UsuarioLoginJaExisteException;
 import com.stefanini.service.UsuarioService;
@@ -43,15 +44,20 @@ public class UsuarioResource {
 
     @GET
     @Path("/{id}")
-    public Response findById(@PathParam(value = "id") Long id){
+    public Response findById(@PathParam(value = "id") Long id) throws UsuarioIdNaoExisteException{
         return Response.status(Status.OK).entity(usuarioService.findById(id)).build();
     }
 
     @DELETE
     @Path("/{id}")
-    public Response delete(@PathParam(value = "id") Long id){
+    public Response delete(@PathParam(value = "id") Long id) throws UsuarioIdNaoExisteException{
         usuarioService.delete(id);
-        return Response.ok().build();
+        return Response.noContent().build();
     }
-    
+
+    @GET
+    @Path("/aniversariantes/{mes}")
+    public Response listAllBirthdaysUsersFromMonth(@PathParam(value = "mes") int mes) throws MesNaoExisteException{
+        return Response.status(Status.OK).entity(usuarioService.listAllBirthdaysUsersFromMonth(mes)).build();
+    }
 }
