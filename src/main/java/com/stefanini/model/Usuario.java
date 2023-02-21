@@ -10,16 +10,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.PrePersist;
+import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 
-import com.stefanini.util.CheckPasswordValidator;
+import com.stefanini.dto.UsuarioCompletoDto;
+import com.stefanini.dto.UsuarioDto;
 
 
 @Entity
@@ -38,11 +37,29 @@ public class Usuario {
         this.dataNascimento = dataNascimento;
     }
 
+    public Usuario(UsuarioCompletoDto usuarioCompletoDto){
+        this.id = usuarioCompletoDto.getId();
+        this.nome = usuarioCompletoDto.getNome();
+        this.login = usuarioCompletoDto.getLogin();
+        this.email = usuarioCompletoDto.getEmail();
+        this.senha = usuarioCompletoDto.getSenha();
+        this.dataNascimento = usuarioCompletoDto.getDataNascimento();
+    }
+
+
+    public Usuario(UsuarioDto usuarioDto){
+        this.id = usuarioDto.getId();
+        this.nome = usuarioDto.getNome();
+        this.login = usuarioDto.getLogin();
+        this.email = usuarioDto.getEmail();
+        this.dataNascimento = usuarioDto.getDataNascimento();
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Max(50)
+    @Size(max = 50)
     @NotBlank
     @Column(nullable = false)
     private String nome;
@@ -52,15 +69,13 @@ public class Usuario {
     @Column(nullable = false,unique = true)
     private String login;
 
-    @Min(10)
+    @Size(min = 10)
     @NotBlank
     @Email
     @Column(nullable = false)
     private String email;
 
-    @Size(min = 4,max = 10)
     @NotBlank
-    @Pattern(regexp = CheckPasswordValidator.PASSWORD_VALIDATOR)
     @Column(nullable = false)
     private String senha;
 
@@ -76,9 +91,12 @@ public class Usuario {
 
     @PrePersist
     public void prePersist() {
-        if(!Objects.nonNull(dataCriacao)){
-            dataCriacao = LocalDateTime.now();
-        }
+        dataCriacao = LocalDateTime.now();
+        dataAtualizacao = LocalDateTime.now();
+    }
+
+    @PreUpdate
+    public void preUpdate() {
         dataAtualizacao = LocalDateTime.now();
     }
 
@@ -171,8 +189,4 @@ public class Usuario {
         return true;
     }
 
-    
-
-    
- 
 }
