@@ -1,5 +1,7 @@
 package com.stefanini.repository;
 
+import java.util.List;
+
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.NoResultException;
 
@@ -17,6 +19,12 @@ public class UsuarioRepository extends GenericDAO<Usuario,Long> {
         } catch(NoResultException e){
             return null;
         }
-
     }
+
+    public List<Usuario> listAllBirthdaysUsersFromMonth(int month){
+        return this.createQuery("SELECT u from Usuario u where month(u.dataNascimento) = :month")
+                       .setParameter("month", month)
+                       .getResultList();
+    }
+
 }

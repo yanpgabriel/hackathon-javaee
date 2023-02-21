@@ -9,6 +9,7 @@ import javax.inject.Inject;
 
 import com.stefanini.dto.UsuarioCompletoDto;
 import com.stefanini.dto.UsuarioDto;
+import com.stefanini.exception.MesNaoExisteException;
 import com.stefanini.exception.UsuarioIdNaoExisteException;
 import com.stefanini.exception.UsuarioLoginJaExisteException;
 import com.stefanini.model.Usuario;
@@ -43,7 +44,10 @@ public class UsuarioService {
         return new UsuarioDto(usuarioRepository.save(novoUsuario));
     }
 
-    public void delete(Long id) {
+    public void delete(Long id) throws UsuarioIdNaoExisteException {
+        if(temIdUsuario(id)){
+            throw new UsuarioIdNaoExisteException("O id informado não existe!");
+        }
         usuarioRepository.delete(id);
     }
 
@@ -62,11 +66,23 @@ public class UsuarioService {
         return new UsuarioDto(usuarioRepository.update(editaUsuario));
     }
     
+
+    public List<UsuarioDto> listAllBirthdaysUsersFromMonth(int month) throws MesNaoExisteException{
+        if(!mesExiste(month)){
+            throw new MesNaoExisteException("O mês informado não existe!");
+        }
+        return usuarioRepository.listAllBirthdaysUsersFromMonth(month).stream().map(u -> new UsuarioDto(u)).collect(Collectors.toList());
+    }
+
     private boolean temLoginUsuario(String login){
         return Objects.nonNull(usuarioRepository.findByLogin(login));
     }
 
     private boolean temIdUsuario(Long id){
         return Objects.nonNull(usuarioRepository.findById(id));
+    }
+
+    private boolean mesExiste(int mes){
+        return mes >= 1 && mes <= 12;
     }
 }
