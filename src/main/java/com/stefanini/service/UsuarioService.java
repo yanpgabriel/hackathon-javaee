@@ -1,7 +1,10 @@
 package com.stefanini.service;
 
+import java.util.HashSet;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import javax.enterprise.context.ApplicationScoped;
@@ -72,6 +75,18 @@ public class UsuarioService {
             throw new MesNaoExisteException("O mês informado não existe!");
         }
         return usuarioRepository.listAllBirthdaysUsersFromMonth(month).stream().map(u -> new UsuarioDto(u)).collect(Collectors.toList());
+    }
+
+    public List<String> listAllUsersEmailProviders(){
+        List<String> emails = this.listAll().stream().map(u -> u.getEmail()).collect(Collectors.toList());
+        Set<String> providers = new HashSet<String>();
+        emails.stream().forEach(e -> {
+            int position = e.indexOf("@");
+            String provider = e.substring(position);
+            providers.add(provider);
+            
+        });
+        return new ArrayList<String>(providers);
     }
 
     private boolean temLoginUsuario(String login){

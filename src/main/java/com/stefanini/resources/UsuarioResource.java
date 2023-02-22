@@ -60,4 +60,10 @@ public class UsuarioResource {
     public Response listAllBirthdaysUsersFromMonth(@PathParam(value = "mes") int mes) throws MesNaoExisteException{
         return Response.status(Status.OK).entity(usuarioService.listAllBirthdaysUsersFromMonth(mes)).build();
     }
+
+    @GET
+    @Path("/provedores-emails")
+    public Response listAllUsersEmailProviders() {
+        return Response.status(Status.OK).entity(usuarioService.listAllUsersEmailProviders()).build();
+    }
 }
