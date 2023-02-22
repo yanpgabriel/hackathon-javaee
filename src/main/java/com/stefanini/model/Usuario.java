@@ -18,7 +18,6 @@ import javax.validation.constraints.Size;
 import com.stefanini.dto.UsuarioCompletoDto;
 import com.stefanini.dto.UsuarioDto;
 
-
 @Entity
 @Table(name = "tb_usuario")
 public class Usuario {

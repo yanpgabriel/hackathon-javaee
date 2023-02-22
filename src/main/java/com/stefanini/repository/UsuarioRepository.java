@@ -25,4 +25,10 @@ public class UsuarioRepository extends GenericDAO<Usuario,Long> {
                        .getResultList();
     }
 
+    public List<Usuario> listAllUsersNameStartsWith(String startsWith){
+        return  this.createQuery("SELECT u from Usuario u where LOWER(u.nome) like LOWER(:pattern)")
+                    .setParameter("pattern", startsWith+"%")
+                    .getResultList();
+    }
+    
 }

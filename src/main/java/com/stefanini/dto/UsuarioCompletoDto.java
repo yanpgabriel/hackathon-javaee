@@ -38,7 +38,7 @@ public class UsuarioCompletoDto {
 
     @Size(min = 4,max = 10)
     @NotBlank
-    @Pattern(regexp = CheckPasswordValidator.PASSWORD_VALIDATOR)
+    @Pattern(regexp = CheckPasswordValidator.PASSWORD_VALIDATOR,message = CheckPasswordValidator.SENHA_FORA_DO_PADRAO)
     private String senha;
 
     @Size(min = 10)

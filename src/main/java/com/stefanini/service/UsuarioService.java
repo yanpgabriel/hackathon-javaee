@@ -13,6 +13,7 @@ import javax.inject.Inject;
 import com.stefanini.dto.UsuarioCompletoDto;
 import com.stefanini.dto.UsuarioDto;
 import com.stefanini.exception.MesNaoExisteException;
+import com.stefanini.exception.TextoComMaisDeUmaLetraException;
 import com.stefanini.exception.UsuarioIdNaoExisteException;
 import com.stefanini.exception.UsuarioLoginJaExisteException;
 import com.stefanini.model.Usuario;
@@ -26,7 +27,10 @@ public class UsuarioService {
     private UsuarioRepository usuarioRepository;
 
     public List<UsuarioDto> listAll() {
-        return usuarioRepository.listAll().stream().map(u -> new UsuarioDto(u)).collect(Collectors.toList());
+        return usuarioRepository.listAll()
+                                .stream()
+                                .map(u -> new UsuarioDto(u))
+                                .collect(Collectors.toList());
     }
 
     public UsuarioDto findById(Long id) {
@@ -48,7 +52,7 @@ public class UsuarioService {
     }
 
     public void delete(Long id) throws UsuarioIdNaoExisteException {
-        if(temIdUsuario(id)){
+        if(!temIdUsuario(id)){
             throw new UsuarioIdNaoExisteException("O id informado não existe!");
         }
         usuarioRepository.delete(id);
@@ -74,7 +78,10 @@ public class UsuarioService {
         if(!mesExiste(month)){
             throw new MesNaoExisteException("O mês informado não existe!");
         }
-        return usuarioRepository.listAllBirthdaysUsersFromMonth(month).stream().map(u -> new UsuarioDto(u)).collect(Collectors.toList());
+        return usuarioRepository.listAllBirthdaysUsersFromMonth(month)
+                                .stream()
+                                .map(u -> new UsuarioDto(u))
+                                .collect(Collectors.toList());
     }
 
     public List<String> listAllUsersEmailProviders(){
@@ -89,12 +96,27 @@ public class UsuarioService {
         return new ArrayList<String>(providers);
     }
 
+    public List<UsuarioDto> listAllUsersNameStartsWith(String startsWith) throws TextoComMaisDeUmaLetraException{
+        if(!temApenasUmCaractere(startsWith)){
+            throw new TextoComMaisDeUmaLetraException("O texto enviado possui mais de um caractere!");
+        }
+
+        return usuarioRepository.listAllUsersNameStartsWith(startsWith)
+                                .stream()
+                                .map(u -> new UsuarioDto(u))
+                                .collect(Collectors.toList());
+    }
+
     private boolean temLoginUsuario(String login){
         return Objects.nonNull(usuarioRepository.findByLogin(login));
     }
 
     private boolean temIdUsuario(Long id){
         return Objects.nonNull(usuarioRepository.findById(id));
+    }
+
+    private boolean temApenasUmCaractere(String string){
+        return string.length() == 1 ;
     }
 
     private boolean mesExiste(int mes){

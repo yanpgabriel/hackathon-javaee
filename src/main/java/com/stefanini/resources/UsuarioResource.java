@@ -16,6 +16,7 @@ import javax.ws.rs.core.Response.Status;
 
 import com.stefanini.dto.UsuarioCompletoDto;
 import com.stefanini.exception.MesNaoExisteException;
+import com.stefanini.exception.TextoComMaisDeUmaLetraException;
 import com.stefanini.exception.UsuarioIdNaoExisteException;
 import com.stefanini.exception.UsuarioLoginJaExisteException;
 import com.stefanini.service.UsuarioService;
@@ -65,5 +66,11 @@ public class UsuarioResource {
     @Path("/provedores-emails")
     public Response listAllUsersEmailProviders() {
         return Response.status(Status.OK).entity(usuarioService.listAllUsersEmailProviders()).build();
+    }
+
+    @GET
+    @Path("/comeca-com/{letra}")
+    public Response listAllUsersNameStartsWith(@PathParam(value = "letra") String letra) throws TextoComMaisDeUmaLetraException{
+        return Response.status(Status.OK).entity(usuarioService.listAllUsersNameStartsWith(letra)).build();
     }
 }
