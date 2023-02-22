@@ -1,10 +1,8 @@
 package com.stefanini.repository;
 
 import java.util.List;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.NoResultException;
-
 import com.stefanini.dao.GenericDAO;
 import com.stefanini.model.Usuario;
 
