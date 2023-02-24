@@ -22,8 +22,9 @@ public class GenericDAO<T, I>  {
     }
 
     @Transactional
-    public void save(T t){
+    public T save(T t){
         em.persist(t);
+        return t;
     }
 
     public T findById(I id){

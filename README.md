@@ -47,3 +47,16 @@ Use o seguinte comando para iniciar o servidor:<br/>
 
 Opcionais:
 - Docker([guia](https://docs.docker.com/))
+
+## Endpoints criados
+
+| Verbo  | Endpoint                      | Ação                                                           |
+|--------|-------------------------------|----------------------------------------------------------------|
+| GET    | usuario                       | Pegar todos os usuários cadastrados                            |
+| POST   | usuario                       | Criar um usuário                                               |
+| PUT    | usuario                       | Atualizar um usuário                                           |
+| DELETE | ussuario/{id}                 | Apagar um usuário                                              |
+| GET    | usuario/aniversariantes/{mes} | Pegar todos os usuários que fazem aniversário no {mes} passado |
+| GET    | usuario/comeca-com/{letra}    | Pegar todos os usuários que tem nome que inicia com a {letra}  |
+| GET    | usuario/provedores-emails     | Pegar todos os provedores de email dos usuários cadastrados    |
+| GET    | usuario/{id}                  | Pegar um usuário pelo {id} passado                             |
