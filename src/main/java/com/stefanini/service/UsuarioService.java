@@ -62,7 +62,7 @@ public class UsuarioService {
 
     public UsuarioDto update(UsuarioCompletoDto usuarioCompletoDto) throws UsuarioLoginJaExisteException,UsuarioIdNaoExisteException {
         Usuario usuarioLogin = usuarioRepository.findByLogin(usuarioCompletoDto.getLogin());
-        if(usuarioCompletoDto.getId().equals(usuarioLogin.getId()) && usuarioCompletoDto.getLogin().equals(usuarioLogin.getLogin())){
+        if(!usuarioCompletoDto.getId().equals(usuarioLogin.getId()) && usuarioCompletoDto.getLogin().equals(usuarioLogin.getLogin())){
             throw new UsuarioLoginJaExisteException("O login informado ja existe!");
         }
         Usuario usuarioPreUpdate = usuarioRepository.findById(usuarioCompletoDto.getId());
