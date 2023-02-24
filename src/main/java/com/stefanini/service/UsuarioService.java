@@ -33,12 +33,14 @@ public class UsuarioService {
                                 .collect(Collectors.toList());
     }
 
-    public UsuarioDto findById(Long id) {
+    public UsuarioCompletoDto findById(Long id) {
         Usuario usuario = usuarioRepository.findById(id);
         if(!Objects.nonNull(usuario)){
             throw new UsuarioIdNaoExisteException("O id informado não existe!");
         }
-        return new UsuarioDto(usuario);
+        UsuarioCompletoDto usuarioCompletoDto = new UsuarioCompletoDto(usuario);
+        usuarioCompletoDto.setSenha(Base64Util.decode(usuarioCompletoDto.getSenha()));
+        return usuarioCompletoDto;
     }
 
     public UsuarioDto save(UsuarioCompletoDto usuarioCompletoDto) throws UsuarioLoginJaExisteException{
@@ -59,7 +61,8 @@ public class UsuarioService {
     }
 
     public UsuarioDto update(UsuarioCompletoDto usuarioCompletoDto) throws UsuarioLoginJaExisteException,UsuarioIdNaoExisteException {
-        if(temLoginUsuario(usuarioCompletoDto.getLogin())){
+        Usuario usuarioLogin = usuarioRepository.findByLogin(usuarioCompletoDto.getLogin());
+        if(usuarioCompletoDto.getId().equals(usuarioLogin.getId()) && usuarioCompletoDto.getLogin().equals(usuarioLogin.getLogin())){
             throw new UsuarioLoginJaExisteException("O login informado ja existe!");
         }
         Usuario usuarioPreUpdate = usuarioRepository.findById(usuarioCompletoDto.getId());
